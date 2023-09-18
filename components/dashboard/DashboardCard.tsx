@@ -1,4 +1,3 @@
-import React from 'react'
 import {
     Card,
     CardContent,
@@ -11,15 +10,21 @@ import DashboardCardAmount from './DashboardCardAmount';
 
 interface DashboardCardProps{
   amount:number;
+  title:string;
+  changeColor?:boolean;
 }
 
-function DashboardCard({amount}:DashboardCardProps) {
+function DashboardCard({amount,title,changeColor}:DashboardCardProps) {  
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Total Expenses</CardTitle>
+        <CardTitle>{title}</CardTitle>
       </CardHeader>
-      <CardContent>
+      <CardContent className=
+      {changeColor ?
+        amount < 0 ? 'text-destructive': 'text-positive'
+        :''
+      }>
         <DashboardCardAmount amount={amount}/>
       </CardContent>
       <CardFooter>

@@ -6,22 +6,22 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
-import AddExpense from '@/components/dashboard/expenses/AddExpenseForm'
-import getExpensesTags from '@/app/actions/getExpenseTags'
+import AddIncomeForm from '@/components/dashboard/income/AddIncomeForm'
+import getIncomeTags from '@/app/actions/getIncomeTags'
 
-async function Expenses() {
+async function Income() {
 
-  const tags = await getExpensesTags()
+  const tags = await getIncomeTags()
 
   return (
     <div className='py-6'>
       <div className='grid grid-cols-3'>
         <Card>
             <CardHeader>
-              <CardTitle>Add Expense</CardTitle>
+              <CardTitle>Add Income</CardTitle>
             </CardHeader>
             <CardContent>
-              <AddExpense tags={tags}/>
+              <AddIncomeForm tags={tags}/>
             </CardContent>
           </Card>
       </div>
@@ -29,4 +29,4 @@ async function Expenses() {
   )
 }
 
-export default Expenses
+export default Income

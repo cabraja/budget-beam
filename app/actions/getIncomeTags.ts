@@ -1,11 +1,11 @@
 import prisma from '@/lib/prismadb'
 import { auth } from '@clerk/nextjs';
 
-export default async function getTags(){
+export default async function getIncomeTags(){
     try {
         const { userId } = auth();
 
-        const tags = await prisma.expenseTag.findMany({
+        const tags = await prisma.incomeTag.findMany({
             where:{
                 OR: [
                     {

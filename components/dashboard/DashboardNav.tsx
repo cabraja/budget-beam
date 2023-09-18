@@ -2,7 +2,7 @@
 import { useState } from "react"
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import Separator from '../ui/custom/Separator'
-import { useRouter,usePathname } from 'next/navigation'
+import { useRouter,usePathname,useSearchParams } from 'next/navigation'
 import DatePickerWithRange from "./DatePickerWithRange"
 import CurrencySelect from "../ui/custom/CurrencySelect"
 import DatePickerChanger from "./DatePickerChanger"
@@ -17,8 +17,15 @@ enum DateChange{
 function DashboardNav() {
   const pathname = usePathname()
   const router = useRouter()
+  const searchParams = useSearchParams()
 
-  const [dateRange, setDateRange] = useState({from: startOfMonth(new Date()), to:endOfMonth(new Date())})
+  // @ts-ignore
+  const [dateRange, setDateRange] = useState({
+     // @ts-ignore
+    from: searchParams.get('from') ? new Date(searchParams.get('from')): startOfMonth(new Date()),
+     // @ts-ignore
+    to:searchParams.get('to') ? new Date(searchParams.get('to')): endOfMonth(new Date())
+  })
 
   const changeDateRange = (option:DateChange) => {
     let fromDate,toDate;
@@ -32,18 +39,56 @@ function DashboardNav() {
     
     setDateRange({from:fromDate, to:toDate});
 
+    const refresh = searchParams.get('refresh');
+
     const query:any = {
       from:fromDate,
-      to:toDate
+      to:toDate,
+      refresh: refresh ? +refresh + 1 : 0
     } 
   
     const url = qs.stringifyUrl({
-      url: '/dashboard/overview',
+      url: pathname,
       query: query
     },{
         skipNull:true
     })
     router.push(url);
+  }
+
+  const generateUrl = (basePath:string):string => {
+    const fromDate = searchParams.get('from');
+    const toDate = searchParams.get('to');
+    const refresh = searchParams.get('refresh');
+
+    if(!fromDate || !toDate){
+      const query:any = {
+        refresh: refresh ?  +refresh + 1 : 0
+      } 
+
+      const url = qs.stringifyUrl({
+        url: basePath,
+        query: query
+      },{
+          skipNull:true
+      })
+      return url;
+    }
+
+    const query:any = {
+      from:fromDate,
+      to:toDate,
+      refresh: refresh ?  +refresh + 1 : 0
+    } 
+
+    const url = qs.stringifyUrl({
+      url: basePath,
+      query: query
+    },{
+        skipNull:true
+    })
+
+    return url;
   }
 
   return (
@@ -53,9 +98,10 @@ function DashboardNav() {
         <div className="flex flex-row items-center justify-between">
           <Tabs defaultValue={pathname} className="w-fit">
               <TabsList>
-                  <TabsTrigger value="/dashboard/overview" onClick={() => router.push('/dashboard/overview')}>Overview</TabsTrigger>
-                  <TabsTrigger value="/dashboard/expenses" onClick={() => router.push('/dashboard/expenses')}>Expenses</TabsTrigger>
-                  <TabsTrigger value="/dashboard/calendar" onClick={() => router.push('/dashboard/calendar')}>Calendar</TabsTrigger>
+                  <TabsTrigger value="/dashboard/overview" onClick={() => router.push(generateUrl('/dashboard/overview'))}>Overview</TabsTrigger>
+                  <TabsTrigger value="/dashboard/expenses" onClick={() => router.push(generateUrl('/dashboard/expenses'))}>Expenses</TabsTrigger>
+                  <TabsTrigger value="/dashboard/income" onClick={() => router.push(generateUrl('/dashboard/income'))}>Income</TabsTrigger>
+                  <TabsTrigger value="/dashboard/calendar" onClick={() => router.push(generateUrl('/dashboard/calendar'))}>Calendar</TabsTrigger>
               </TabsList>
           </Tabs>
 

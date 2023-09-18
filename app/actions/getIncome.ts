@@ -6,10 +6,9 @@ import { startOfMonth,endOfMonth } from 'date-fns';
 export interface IDashboardParams{
     from?:string;
     to?:string;
-    refresh?:number;
 }
 
-export default async function getExpenses(params:IDashboardParams){
+export default async function getIncome(params:IDashboardParams){
     try {
         const {userId} = auth();
         
@@ -18,7 +17,6 @@ export default async function getExpenses(params:IDashboardParams){
         }
 
         let from,to;   
-        
         if(Object.keys(params).length < 2){             
             from = startOfMonth(new Date());
             to = endOfMonth(new Date())
@@ -27,9 +25,8 @@ export default async function getExpenses(params:IDashboardParams){
             from = new Date(params.from);
             to = new Date(params.to);    
         }        
-        console.log(from,to);
         
-        const expenses = await prisma.expense.findMany({
+        const income = await prisma.income.findMany({
             where:{
                 userId:userId,
                 date:{
@@ -38,7 +35,8 @@ export default async function getExpenses(params:IDashboardParams){
                 }
             }
         })
-        return expenses;
+        
+        return income;
 
     } catch (error) {
         

@@ -40,7 +40,10 @@ export default async function getGroupedExpenses(params:IDashboardParams){
             },
             _sum:{
                 amount:true
-            },    
+            },
+            orderBy:{
+                expenseTagId: 'asc'
+            }
         })
 
         const tags = await prisma.expenseTag.findMany({

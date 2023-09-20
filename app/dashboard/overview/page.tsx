@@ -5,6 +5,7 @@ import getIncome from '@/app/actions/getIncome';
 import getGroupedExpenses from '@/app/actions/getGroupedExpenses';
 import OverviewGraph from '@/components/dashboard/graphs/OverviewGraph';
 import Separator from '@/components/ui/custom/Separator';
+import OverviewPieChart from '@/components/dashboard/graphs/OverviewPieChart';
 
 interface OverviewProps{
   searchParams:IDashboardParams;
@@ -33,6 +34,10 @@ async function Overview({searchParams}:OverviewProps) {
       <div className='grid grid-cols-3 gap-x-8 gap-y-4'>
         <div className='col-span-2'>
           <OverviewGraph data={groupedExpenses}/>
+        </div>
+
+        <div className='col-span-1'>
+         <OverviewPieChart />
         </div>
       </div>
     </div>

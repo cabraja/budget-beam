@@ -20,7 +20,8 @@ export default async function getIncomeTags(){
 
         return tags.map(tag =>({
             label:tag.label,
-            value:tag.id
+            value:tag.id,
+            color:tag.color
         }));
     } catch (error:any) {
         throw new Error(error)

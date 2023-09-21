@@ -1,40 +1,21 @@
 'use client'
-import React from 'react'
-import { PieChart, Pie, LabelList, ResponsiveContainer } from 'recharts';
+import React from 'react';
+import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
+import { Pie } from 'react-chartjs-2';
+import { OverviewGraphData } from '@/app/types/graphs';
+
+ChartJS.register(ArcElement, Tooltip, Legend);
 import { Card,CardHeader,CardTitle } from '@/components/ui/card';
 
-const data = [
-  { name: 'Group A', value: 400 },
-  { name: 'Group B', value: 300 },
-  { name: 'Group C', value: 300 },
-  { name: 'Group D', value: 200 },
-  { name: 'Group E', value: 278 },
-  { name: 'Group F', value: 189 },
-];
-
-function OverviewPieChart() {
+function OverviewPieChart({data}:{data:OverviewGraphData}) {
     return (
-
-    <Card className='w-full px-5'>
+    <Card className='w-full'>
         <CardHeader>
-            <CardTitle>Expenses by tag</CardTitle>
+            <CardTitle>Income by tag</CardTitle>
         </CardHeader>
-    <div className='w-full h-[300px]'>
-        <ResponsiveContainer width="100%" height="100%">
-            <PieChart width={400} height={400}>
-            <Pie
-                dataKey="value"
-                data={data}
-                cx="50%"
-                cy="50%"
-                outerRadius={80}
-                fill="#b4e260"
-            >
-            <LabelList dataKey="name" position="outside" className='font-thin text-black dark:text-white' />
-            </Pie>
-            </PieChart>
-        </ResponsiveContainer>
-    </div>
+        <div className='w-full'>
+            <Pie data={data}/>
+        </div>
     </Card>
       );
 }

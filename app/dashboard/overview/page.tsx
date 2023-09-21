@@ -6,6 +6,7 @@ import getGroupedExpenses from '@/app/actions/getGroupedExpenses';
 import OverviewGraph from '@/components/dashboard/graphs/OverviewGraph';
 import Separator from '@/components/ui/custom/Separator';
 import OverviewPieChart from '@/components/dashboard/graphs/OverviewPieChart';
+import getGroupedIncome from '@/app/actions/getGroupedIncome';
 
 interface OverviewProps{
   searchParams:IDashboardParams;
@@ -19,6 +20,7 @@ async function Overview({searchParams}:OverviewProps) {
   const totalIncome = income?.reduce((acc,curr) =>  acc + curr.amount, 0) || 0;
   
   const groupedExpenses = await getGroupedExpenses(searchParams);
+  const groupedIncome = await getGroupedIncome(searchParams);
 
   return (
     <div className='py-6'>
@@ -32,12 +34,12 @@ async function Overview({searchParams}:OverviewProps) {
       <Separator num={4}/>
 
       <div className='grid grid-cols-3 gap-x-8 gap-y-4'>
-        <div className='col-span-2'>
+        <div className='col-span-2 h-full'>
           <OverviewGraph data={groupedExpenses}/>
         </div>
 
-        <div className='col-span-1'>
-         <OverviewPieChart />
+        <div className='col-span-1 h-full'>
+         <OverviewPieChart data={groupedIncome}/>
         </div>
       </div>
     </div>

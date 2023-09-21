@@ -36,6 +36,7 @@ model ExpenseTag {
   createdAt DateTime  @default(now())
   label     String
   userId    String?
+  color     String
   Expense   Expense[]
 }
 
@@ -44,5 +45,6 @@ model IncomeTag {
   createdAt DateTime @default(now())
   label     String
   userId    String?
+  color     String
   Income    Income[]
 }

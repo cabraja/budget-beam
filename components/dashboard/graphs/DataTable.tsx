@@ -1,15 +1,14 @@
-import { Expense,ExpenseTag } from '@prisma/client'
 import React from 'react'
 import {
     Table,
     TableBody,
-    TableCaption,
-    TableCell,
     TableHead,
     TableHeader,
     TableRow,
 } from "@/components/ui/table"
 import DataTableRow from './DataTableRow';
+import { ScrollArea } from "@/components/ui/scroll-area"
+
 
 interface DataTableProps{
     data: {
@@ -32,6 +31,7 @@ interface DataTableProps{
 
 function DataTable({data}:DataTableProps) {
   return (
+   <ScrollArea className='h-[50vh] w-full'>
     <Table className='h-[inherit]'>
         <TableHeader>
                 <TableRow>
@@ -49,7 +49,7 @@ function DataTable({data}:DataTableProps) {
             }
         </TableBody>
     </Table>
-
+   </ScrollArea>
   )
 }
 

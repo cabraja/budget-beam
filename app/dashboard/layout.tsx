@@ -6,7 +6,7 @@ export default function DashboardLayout({
     children: React.ReactNode
   }) {
     return (
-      <main className="my-8 px-10 py-6 border rounded-lg">
+      <main className="lg:my-8 my-4 lg:px-10 px-4 py-6 border rounded-lg">
         <DashboardNav />
         {children}
       </main>

@@ -29,7 +29,7 @@ export default function RootLayout({
           <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
             <ToastProvider />
             <Navbar />
-            <div className='px-10 max-w-[1600px] mx-auto'>
+            <div className='md:px-10 px-3 max-w-[1600px] mx-auto'>
             {children}
             </div>
           </ThemeProvider>

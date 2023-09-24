@@ -9,7 +9,7 @@ enum DateChange{
 
 function DatePickerChanger({onChange}:{onChange:(num:number) => void}) {
   return (
-    <div className='flex gap-x-2'>
+    <div className='flex gap-x-2 w-fit'>
         <Button variant="outline" size="icon" onClick={() => onChange(DateChange.SUBTRACT)}>
             <ChevronLeft className="h-4 w-4" />
         </Button>

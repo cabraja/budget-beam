@@ -63,10 +63,10 @@ export default async function getGroupedIncome(params:IDashboardParams){
         let result:OverviewGraphData = {
             labels: [],
             datasets:[{
-                label: "Tag",
+                label: "Amount",
                 data:[],
                 backgroundColor:[],
-                borderWidth:1
+                borderWidth:0
             }]
         };
 

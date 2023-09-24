@@ -1,45 +1,46 @@
 import React from 'react'
 import DashboardCard from '@/components/dashboard/DashboardCard';
-import getExpenses, { IDashboardParams } from '@/app/actions/getExpenses'
-import getIncome from '@/app/actions/getIncome';
+import { IDashboardParams } from '@/app/actions/getGroupedExpenses';
 import getGroupedExpenses from '@/app/actions/getGroupedExpenses';
 import OverviewGraph from '@/components/dashboard/graphs/OverviewGraph';
 import Separator from '@/components/ui/custom/Separator';
 import OverviewPieChart from '@/components/dashboard/graphs/OverviewPieChart';
 import getGroupedIncome from '@/app/actions/getGroupedIncome';
+import getTotalData from '@/app/actions/getTotalData';
 
 interface OverviewProps{
   searchParams:IDashboardParams;
 }
 
 async function Overview({searchParams}:OverviewProps) {
-  const expenses = await getExpenses(searchParams);
-  const totalExpenses = expenses?.reduce((acc, curr) => acc + curr.amount, 0) || 0;
+  const totalData = getTotalData(searchParams);
+  const groupedExpensesData = getGroupedExpenses(searchParams);
+  const groupedIncomeData = getGroupedIncome(searchParams);
 
-  const income = await getIncome(searchParams);
-  const totalIncome = income?.reduce((acc,curr) =>  acc + curr.amount, 0) || 0;
-  
-  const groupedExpenses = await getGroupedExpenses(searchParams);
-  const groupedIncome = await getGroupedIncome(searchParams);
+  const [total,groupedExpenses,groupedIncome] = await Promise.all([totalData,groupedExpensesData,groupedIncomeData]);
 
   return (
     <div className='py-6'>
       <div className='grid grid-cols-1 md:grid-cols-3 gap-x-8 gap-y-4'>
-        <DashboardCard title='Total Income' amount={totalIncome || 0}/>
+        <DashboardCard title='Total Income' amount={total?.income || 0}/>
 
-        <DashboardCard title='Total Expenses' amount={totalExpenses || 0}/>
+        <DashboardCard title='Total Expenses' amount={total?.expense || 0}/>
 
-        <DashboardCard title='Net Difference' changeColor={true} amount={totalIncome - totalExpenses}/>
+        <DashboardCard title='Net Difference' changeColor={true} amount={(total?.income || 0) - (total?.expense || 0)}/>
       </div>
       <Separator num={4}/>
 
       <div className='grid grid-cols-3 gap-x-8 gap-y-4'>
-        <div className='col-span-2 h-full'>
-          <OverviewGraph data={groupedExpenses}/>
+        <div className='lg:col-span-2 col-span-3 flex flex-col lg:h-full'>
+          <div className='flex-grow h-full'>
+            <OverviewGraph data={groupedExpenses}/>
+          </div>
         </div>
 
-        <div className='col-span-1 h-full'>
-         <OverviewPieChart data={groupedIncome}/>
+        <div className='lg:col-span-1 col-span-3 flex flex-col h-full'>
+         <div className='flex-grow h-full'>
+          <OverviewPieChart data={groupedIncome}/>
+         </div>
         </div>
       </div>
     </div>

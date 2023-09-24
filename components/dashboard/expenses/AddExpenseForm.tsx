@@ -11,6 +11,7 @@ import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import { Calendar } from "@/components/ui/calendar"
 import { Check, ChevronsUpDown } from "lucide-react"
+import { useRouter } from "next/navigation"
 import {
   Popover,
   PopoverContent,
@@ -54,6 +55,7 @@ const formSchema = z.object({
 
 function AddExpenseForm({tags}:{tags:TagSelect[]}) {
   const [disabled, setDisabled] = useState(false);
+  const router = useRouter();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -78,6 +80,7 @@ function AddExpenseForm({tags}:{tags:TagSelect[]}) {
       .finally(() => {
         toast.dismiss(loading)
         setDisabled(false)
+        router.refresh();
       })
   }
 

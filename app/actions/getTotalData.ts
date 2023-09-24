@@ -6,10 +6,14 @@ import { startOfMonth,endOfMonth } from 'date-fns';
 export interface IDashboardParams{
     from?:string;
     to?:string;
-    refresh?:number;
 }
 
-export default async function getExpenses(params:IDashboardParams){
+export interface ITotalData{
+    expense:number | null;
+    income: number | null;
+}
+
+export default async function getTotalData(params:IDashboardParams){
     try {
         const {userId} = auth();
         
@@ -18,7 +22,6 @@ export default async function getExpenses(params:IDashboardParams){
         }
 
         let from,to;   
-        
         if(Object.keys(params).length < 2){             
             from = startOfMonth(new Date());
             to = endOfMonth(new Date())
@@ -28,23 +31,34 @@ export default async function getExpenses(params:IDashboardParams){
             to = new Date(params.to);    
         }        
         
-        const expenses = await prisma.expense.findMany({
+        const exp = await prisma.expense.aggregate({
+            _sum:{
+                amount:true
+            },
             where:{
                 userId:userId,
                 date:{
                     gte:from,
                     lte:to
                 }
-            },
-            include:{
-                tag:true
-            },
-            orderBy:{
-                createdAt:'desc'
             }
         })
+
+        const inc = await prisma.income.aggregate({
+            _sum:{
+                amount:true
+            },
+            where:{
+                userId:userId,
+                date:{
+                    gte:from,
+                    lte:to
+                }
+            }
+        })
+
         
-        return expenses;
+        return {expense:exp._sum.amount, income:inc._sum.amount};
 
     } catch (error) {
         

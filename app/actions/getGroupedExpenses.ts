@@ -2,7 +2,8 @@ import prisma from '@/lib/prismadb'
 import { auth } from '@clerk/nextjs';
 import { redirect } from 'next/navigation'
 import { startOfMonth,endOfMonth } from 'date-fns';
-import { OverviewGraphBar } from '@/components/dashboard/graphs/OverviewGraph';
+import { OverviewGraphData } from '../types/graphs';
+import { ExpenseTag } from '@prisma/client';
 
 export interface IDashboardParams{
     from?:string;
@@ -59,14 +60,29 @@ export default async function getGroupedExpenses(params:IDashboardParams){
             }
         })
 
-        const result:OverviewGraphBar[] = expenses.map(exp => {
-            let tagName:string = "Uknown";
+        let result:OverviewGraphData = {
+            labels: [],
+            datasets:[{
+                label: "Amount",
+                data:[],
+                backgroundColor:[],
+                borderWidth:0
+            }]
+        };
 
+        expenses.forEach(exs => {
+            let tagObj:ExpenseTag;
+            let tagName:string = 'Uknown';
             tags.forEach(tag => {
-                if(tag.id === exp.expenseTagId) tagName = tag.label;
+                if(tag.id === exs.expenseTagId){
+                    tagName = tag.label;
+                    tagObj = tag;
+                }
             })
 
-            return {sum: exp._sum.amount || 0, tag:tagName}
+            result.labels.push(tagName);
+            result.datasets[0].data.push(exs._sum.amount || 0);
+            result.datasets[0].backgroundColor.push(tagObj?.color || "#000")
         })
         
         return result;

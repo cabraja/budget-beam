@@ -21,7 +21,7 @@ function Navbar() {
 
             {
               userId && (
-                <nav className='flex flex-row items-center gap-x-5'>
+                <nav className='lg:flex hidden flex-row items-center gap-x-5'>
                   <Link href="/dashboard/overview" className="text-sm text-muted-foreground font-medium transition-colors hover:text-primary">
                   Overview
                   </Link>

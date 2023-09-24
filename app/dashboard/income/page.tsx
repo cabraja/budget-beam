@@ -16,7 +16,7 @@ async function Income() {
   return (
     <div className='py-6'>
       <div className='grid grid-cols-3'>
-        <Card>
+        <Card className='col-span-3 lg:col-span-1'>
             <CardHeader>
               <CardTitle>Add Income</CardTitle>
             </CardHeader>

@@ -95,20 +95,28 @@ function DashboardNav() {
     <div>
         <h1 className='text-4xl font-extrabold'>Dashboard</h1>
         <Separator num={2}/>
-        <div className="flex flex-row items-center justify-between">
-          <Tabs defaultValue={pathname} className="w-fit">
-              <TabsList>
-                  <TabsTrigger value="/dashboard/overview" onClick={() => router.push(generateUrl('/dashboard/overview'))}>Overview</TabsTrigger>
-                  <TabsTrigger value="/dashboard/expenses" onClick={() => router.push(generateUrl('/dashboard/expenses'))}>Expenses</TabsTrigger>
-                  <TabsTrigger value="/dashboard/income" onClick={() => router.push(generateUrl('/dashboard/income'))}>Income</TabsTrigger>
-                  <TabsTrigger value="/dashboard/calendar" onClick={() => router.push(generateUrl('/dashboard/calendar'))}>Calendar</TabsTrigger>
+        <div className="flex lg:flex-row flex-col items-center justify-between">
+          <Tabs defaultValue={pathname} className="lg:w-fit w-full">
+              <TabsList className="w-full justify-between">
+                  <TabsTrigger className="text-[0.6rem] lg:text-sm" value="/dashboard/overview" onClick={() => router.push(generateUrl('/dashboard/overview'))}>Overview</TabsTrigger>
+                  <TabsTrigger className="text-[0.6rem] lg:text-sm" value="/dashboard/expenses" onClick={() => router.push(generateUrl('/dashboard/expenses'))}>Expenses</TabsTrigger>
+                  <TabsTrigger className="text-[0.6rem] lg:text-sm" value="/dashboard/income" onClick={() => router.push(generateUrl('/dashboard/income'))}>Income</TabsTrigger>
+                  <TabsTrigger className="text-[0.6rem] lg:text-sm" value="/dashboard/calendar" onClick={() => router.push(generateUrl('/dashboard/calendar'))}>Calendar</TabsTrigger>
               </TabsList>
           </Tabs>
 
-          <div className="flex flex-row items-center gap-x-2">
+          <div className="lg:flex hidden flex-row items-center gap-x-2">
             <DatePickerChanger onChange={event => changeDateRange(event)}/>
             <DatePickerWithRange date={dateRange}/>
             <CurrencySelect />
+          </div>
+
+          <div className="lg:hidden flex flex-col items-stretch gap-x-2 gap-y-2 mt-3 w-full">
+            <div className="flex flex-row justify-between items-center">
+              <DatePickerChanger onChange={event => changeDateRange(event)}/>
+              <CurrencySelect />
+            </div>
+            <DatePickerWithRange date={dateRange}/>
           </div>
         </div>
 

@@ -33,6 +33,12 @@ export default async function getIncome(params:IDashboardParams){
                     gte:from,
                     lte:to
                 }
+            },
+            include:{
+                tag:true
+            },
+            orderBy:{
+                createdAt:'desc'
             }
         })
         

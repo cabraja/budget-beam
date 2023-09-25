@@ -9,6 +9,7 @@ import AddExpense from '@/components/dashboard/expenses/AddExpenseForm'
 import getExpensesTags from '@/app/actions/getExpenseTags'
 import { IDashboardParams } from '@/app/actions/getGroupedExpenses'
 import getExpenses from '@/app/actions/getExpenses'
+import { TableType } from '@/app/types/enums'
 import DataTable from '@/components/dashboard/graphs/DataTable'
 
 interface OverviewProps{
@@ -24,7 +25,7 @@ async function Expenses({searchParams}:OverviewProps) {
 
   return (
     <div className='py-6'>
-      <div className='grid grid-cols-3 gap-x-10'>
+      <div className='grid grid-cols-3 gap-x-10 gap-y-5'>
         <Card className='col-span-3 lg:col-span-1'>
             <CardHeader>
               <CardTitle>Add Expense</CardTitle>
@@ -35,10 +36,10 @@ async function Expenses({searchParams}:OverviewProps) {
         </Card>
 
         <Card className='col-span-3 lg:col-span-2 py-4 px-2'>
-          <CardContent className='h-full'>
+          <CardContent className='h-full lg:p-6 p-0'>
             {
               expenses && expenses.length ?
-              <DataTable data={expenses}/>
+              <DataTable data={expenses} type={TableType.EXPENSES}/>
               :
               <div className='flex items-center justify-center w-full h-full'>
                 <div className='flex flex-col items-center'>

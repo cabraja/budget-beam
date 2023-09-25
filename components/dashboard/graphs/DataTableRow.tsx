@@ -1,15 +1,20 @@
 'use client'
 import React from 'react'
+import { useCallback,useState } from 'react'
 import {format} from 'date-fns'
 import {BsFillTrashFill} from 'react-icons/bs'
+import axios from 'axios'
+import toast from 'react-hot-toast'
 import {
     TableCell,
     TableRow,
 } from "@/components/ui/table"
 import { Button } from "@/components/ui/button"
+import { useRouter } from 'next/navigation'
 
 
-interface DataTableRowProps{
+export interface DataTableRowProps{
+    type:string,
     data: {
         tag: {
             id: number;
@@ -28,14 +33,31 @@ interface DataTableRowProps{
     }
 }
 
-function DataTableRow({data}:DataTableRowProps) {
+
+function DataTableRow({type,data}:DataTableRowProps) {
+    const router = useRouter()
+    const [disabled, setDisabled] = useState(false)
+
+    const deleteRow = useCallback(() => {
+        setDisabled(true);
+        axios.delete(`/api/${type}/${data.id}`)
+        .then(res => {
+            toast.success('Deleted');
+            router.refresh();
+        })
+        .catch(err => {
+            toast.error('Error occured, try again later')
+        })
+        .finally(() => setDisabled(false))
+    },[data.id])
+
   return (
     <TableRow>
         <TableCell className="font-medium">{data.tag.label}</TableCell>
         <TableCell>{format(data.date, "PP")}</TableCell>
         <TableCell className="text-right">${data.amount}</TableCell>
         <TableCell className='w-0'>
-            <Button className='bg-destructive hover:bg-destructive hover:opacity-70 transition'>
+            <Button disabled={disabled} onClick={() => deleteRow()} className='bg-destructive hover:bg-destructive hover:opacity-70 transition'>
                 <BsFillTrashFill size={16}/>
             </Button>
         </TableCell>

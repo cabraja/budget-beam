@@ -1,7 +1,7 @@
 import prisma from '@/lib/prismadb'
 import { auth } from '@clerk/nextjs';
 
-export default async function getExpense(){
+export default async function getExpenseTags(){
     try {
         const { userId } = auth();
 

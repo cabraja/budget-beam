@@ -26,12 +26,8 @@ function Navbar() {
                   Overview
                   </Link>
 
-                  <Link href="/tips" className="text-sm text-muted-foreground font-medium transition-colors hover:text-primary">
-                  Budget
-                  </Link>
-
-                  <Link href="/examples/dashboard" className="text-sm text-muted-foreground font-medium transition-colors hover:text-primary">
-                  Expenses
+                  <Link href="/contact" className="text-sm text-muted-foreground font-medium transition-colors hover:text-primary">
+                  Contact
                   </Link>
 
                   <UserButton afterSignOutUrl='/'/>

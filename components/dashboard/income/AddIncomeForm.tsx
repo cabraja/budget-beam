@@ -35,6 +35,7 @@ import {
 import { Input } from "@/components/ui/input"
 import { useState } from "react"
 import { TagSelect } from "@/app/types"
+import { useRouter } from "next/navigation"
 
 const formSchema = z.object({
   amount: z.coerce.number().positive({
@@ -53,6 +54,7 @@ const formSchema = z.object({
 
 
 function AddIncomeForm({tags}:{tags:TagSelect[]}) {
+  const router = useRouter();
   const [disabled, setDisabled] = useState(false);
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -78,6 +80,7 @@ function AddIncomeForm({tags}:{tags:TagSelect[]}) {
       .finally(() => {
         toast.dismiss(loading)
         setDisabled(false)
+        router.refresh()
       })
   }
 

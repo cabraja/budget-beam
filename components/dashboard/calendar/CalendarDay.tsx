@@ -1,6 +1,6 @@
 'use client'
 import { DataEntry } from "./CalendarComponent";
-import {format} from 'date-fns'
+import useSelectedDay from "@/app/hooks/useSelectedDay";
 import {
   Popover,
   PopoverContent,
@@ -15,6 +15,9 @@ interface CalendarDayProps{
 }
 
 function CalendarDay({day,income,expense}:CalendarDayProps) {
+
+  const selectedDay = useSelectedDay()
+
    let incomeTotal = 0;
     if(income && income?.length > 0){
         incomeTotal = income.reduce((accumulator, currentValue) => {
@@ -34,7 +37,7 @@ function CalendarDay({day,income,expense}:CalendarDayProps) {
   return (
     <Popover>
       <PopoverTrigger>
-        <div className={`
+        <div onClick={() => selectedDay.onChange(income || [], expense || [])} className={`
         rounded-full
         aspect-square
         cursor-pointer 

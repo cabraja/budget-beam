@@ -6,6 +6,7 @@ import { IDashboardParams } from '@/app/actions/getGroupedExpenses'
 import CalendarComponent from '@/components/dashboard/calendar/CalendarComponent'
 import getIncome from '@/app/actions/getIncome'
 import getExpenses from '@/app/actions/getExpenses'
+import CalendarSelectedData from '@/components/dashboard/calendar/CalendarSelectedData'
 
 interface OverviewProps{
   searchParams:IDashboardParams;
@@ -30,6 +31,10 @@ async function Calendar({searchParams}:OverviewProps) {
               :
               <p>Error, try later.</p>
             }
+        </Card>
+
+        <Card className='col-span-3 lg:col-span-1 px-8 py-8'>
+            <CalendarSelectedData />
         </Card>
 
       </div>

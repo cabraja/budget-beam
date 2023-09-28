@@ -35,7 +35,7 @@ function CalendarSelectedData() {
                             <p className="font-light text-secondary-foreground">No expenses on this day.</p>
                             :
                             selectedDay.expenses.map(exp => (
-                            <li className="flex flex-row items-center gap-x-4 my-1">
+                            <li key={exp.id} className="flex flex-row items-center gap-x-4 my-1">
                                 <div className="rounded-full w-[10px] h-[10px]" style={{backgroundColor: exp.tag.color}}></div>
                                 <p>{exp.amount}$ - {exp.tag.label}</p>
                             </li>
@@ -52,7 +52,7 @@ function CalendarSelectedData() {
                             <p className="font-light text-secondary-foreground">No income on this day.</p>
                             :
                             selectedDay.income.map(inc => (
-                            <li className="flex flex-row items-center gap-x-4 my-1">
+                            <li key={inc.id} className="flex flex-row items-center gap-x-4 my-1">
                                 <div className="rounded-full w-[10px] h-[10px]" style={{backgroundColor: inc.tag.color}}></div>
                                 <p>{inc.amount}$ - {inc.tag.label}</p>
                             </li>

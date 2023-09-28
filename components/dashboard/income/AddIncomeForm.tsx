@@ -36,6 +36,8 @@ import { Input } from "@/components/ui/input"
 import { useState } from "react"
 import { TagSelect } from "@/app/types"
 import { useRouter } from "next/navigation"
+import AddNewTag from "../expenses/AddNewTag"
+import {TYPE} from '@/components/dashboard/expenses/AddNewTag'
 
 const formSchema = z.object({
   amount: z.coerce.number().positive({
@@ -155,6 +157,9 @@ function AddIncomeForm({tags}:{tags:TagSelect[]}) {
                           {tag.label}
                         </CommandItem>
                       ))}
+                      <CommandItem>
+                          <AddNewTag type={TYPE.INCOME}/>
+                      </CommandItem>
                     </CommandGroup>
                   </Command>
                 </PopoverContent>

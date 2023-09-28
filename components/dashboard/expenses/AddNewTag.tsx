@@ -1,5 +1,6 @@
 'use client'
-
+import {useState} from 'react';
+import { HexColorPicker } from "react-colorful";
 import {
     Dialog,
     DialogContent,
@@ -10,18 +11,14 @@ import {
   } from "@/components/ui/dialog"
 import { Button } from "@/components/ui/button"
 import {
-  Form,
   FormControl,
-  FormDescription,
-  FormField,
   FormItem,
-  FormLabel,
-  FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
-import { useForm } from "react-hook-form"
-  import { zodResolver } from "@hookform/resolvers/zod"
-  import * as z from 'zod'
+import { z } from "zod";
+import axios from 'axios';
+import toast from 'react-hot-toast';
+import { useRouter } from 'next/navigation';
 
   export enum TYPE{
     EXPENSE = "expense",
@@ -32,26 +29,53 @@ import { useForm } from "react-hook-form"
     type:TYPE;
   }
 
-  const formSchema = z.object({
-    label: z.string().max(20,{message: "Tag name cannot exceed 20 characters."}),
-    color:z.string()
-  })
+  const form = z.object({
+    label: z.string().min(1,{message:"Pick a name."}).max(24,{message: "Name cannot exceed 24 characters."}),
+    color: z.string()
+  });
+
 
 function AddNewTag({type}:AddNewTagProps) {
 
-    const form = useForm<z.infer<typeof formSchema>>({
-        resolver: zodResolver(formSchema),
-        defaultValues: {
-          label: "",
-          color: '#000'
-        },
-      })
+    const [color, setColor] = useState("#1d42c5");
+    const [label,setLabel] = useState("");
+    const [error, setError] = useState("");
+    const [disabled,setDisabled] = useState(false)
+    const router = useRouter();
 
-      function onSubmit(values: z.infer<typeof formSchema>) {
-        // Do something with the form values.
-        // ✅ This will be type-safe and validated.
-        console.log(values)
+    const handleSubmit = () => {
+      setError("");
+
+      try {
+          const values = {label:label,color:color};
+          form.parse(values);
+          const loading = toast.loading('Loading')
+
+          axios.post(`/api/${type}Tags`,values)
+            .then(res => {
+              toast.success('Tag added')
+            })
+            .catch(err => {
+              toast.error('Error occured, try again later')
+            })
+            .finally(() => {
+              toast.dismiss(loading)
+              setDisabled(false)
+              setLabel("");
+              router.refresh();
+            })
+          
+          
+      } catch (error:any) {
+          if(label.length > 24){
+              setError("Name cannot exceed 24 characters.")
+          }else{
+              setError("Enter a name.")
+          }
       }
+
+    }
+
 
   return (
     <Dialog>
@@ -64,27 +88,26 @@ function AddNewTag({type}:AddNewTagProps) {
                 </DialogDescription>
                 </DialogHeader>
 
-                <Form {...form}>
-                    <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-                        <FormField
-                        control={form.control}
-                        name="label"
-                        render={({ field }) => (
-                            <FormItem>
-                            <FormLabel>Name</FormLabel>
-                            <FormControl>
-                                <Input placeholder="shadcn" {...field} />
-                            </FormControl>
-                            <FormDescription>
-                                
-                            </FormDescription>
-                            <FormMessage />
-                            </FormItem>
-                        )}
-                        />
-                        <Button type="submit">Submit</Button>
-                    </form>
-                </Form>
+                <form className="space-y-8">
+                    <FormItem>
+                        <label>Name</label>
+                        <FormControl>
+                            <Input type='text' placeholder="Enter tag name" value={label} onChange={(e) => setLabel(e.target.value)}/>
+                        </FormControl>
+                        {
+                            error && <p className='text-sm font-light text-destructive'>{error}</p>
+                        }
+                    </FormItem>
+
+                    <FormItem>
+                        <label>Color</label>
+                        <HexColorPicker className='!w-full' color={color} onChange={setColor} />
+                    </FormItem>
+
+                    <div className='w-full flex flex-row justify-end'>
+                      <Button disabled={disabled} type="button" onClick={() => handleSubmit()}>Submit</Button>
+                    </div>
+                </form>
             </DialogContent>
     </Dialog>
 

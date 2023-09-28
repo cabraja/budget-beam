@@ -52,7 +52,7 @@ function CalendarDay({day,income,expense}:CalendarDayProps) {
         border
         `}
         >
-          {day}
+          <p className="text-sm lg:text-lg">{day}</p>
         </div>
       </PopoverTrigger>
       <PopoverContent>

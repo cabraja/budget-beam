@@ -66,7 +66,7 @@ function CalendarComponent({startDate,income,expenses}:CalendarProps) {
 
   return (
     <div>
-      <div className="grid grid-cols-7 gap-x-8 gap-y-5 text-center mb-3">
+      <div className=" hidden lg:grid grid-cols-7 gap-x-8 gap-y-5 text-center mb-3">
         <p>Monday</p>
         <p>Tuesday</p>
         <p>Wednesday</p>
@@ -75,8 +75,18 @@ function CalendarComponent({startDate,income,expenses}:CalendarProps) {
         <p>Saturday</p>
         <p>Sunday</p>
       </div>
+
+      <div className="lg:hidden grid grid-cols-7 gap-x-8 gap-y-5 text-center mb-3 font-bold">
+        <p>M</p>
+        <p>T</p>
+        <p>W</p>
+        <p>T</p>
+        <p>F</p>
+        <p>S</p>
+        <p>S</p>
+      </div>
       
-      <div className="grid grid-cols-7 gap-x-8 gap-y-5">
+      <div className="grid grid-cols-7 lg:gap-x-8 gap-x-2 gap-y-2 lg:gap-y-5">
       {
         Array.from({ length: dayOfWeek }, (_r, index) => (
           <div className="invisible" key={index}>

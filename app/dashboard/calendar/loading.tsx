@@ -16,6 +16,15 @@ function loading() {
             </div>
         </Card>
 
+        <Card className='col-span-3 lg:col-span-1 px-8 py-8'>
+          <Skeleton className="w-[60%] rounded-full mb-6 h-[36px]" />
+
+          <Skeleton className="w-[90%] rounded-full my-4 h-[24px]" />
+          <Skeleton className="w-[60%] rounded-full my-4 h-[24px]" />
+          <Skeleton className="w-[70%] rounded-full my-4 h-[24px]" />
+          <Skeleton className="w-[40%] rounded-full my-4 h-[24px]" />
+        </Card>
+
       </div>
     </div>
   )

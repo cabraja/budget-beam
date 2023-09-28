@@ -23,7 +23,7 @@ async function Calendar({searchParams}:OverviewProps) {
   return (
     <div className='py-6'>
       <div className='grid grid-cols-3 gap-x-10 gap-y-5'>
-        <Card className='col-span-3 lg:col-span-2 px-8 py-8'>
+        <Card className='col-span-3 lg:col-span-2 lg:p-8 p-4'>
             {
               income && expenses
               ?

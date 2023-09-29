@@ -13,7 +13,7 @@ import DataTableCard from './DataTableCard';
 
 interface DataTableProps{
     type:string,
-    data: {
+    data: ({
         tag: {
             id: number;
             createdAt: Date;
@@ -29,7 +29,7 @@ interface DataTableProps{
         userId: string;
         expenseTagId?: number;
         incomeTagId?:number;
-    }[]
+    })[]
 }
 
 function DataTable({type,data}:DataTableProps) {

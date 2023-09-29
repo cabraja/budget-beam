@@ -29,7 +29,8 @@ export interface DataTableRowProps{
         amount: number;
         date: Date;
         userId: string;
-        expenseTagId: number;
+        expenseTagId?: number | undefined;
+        incomeTagId?: number | undefined;
     }
 }
 

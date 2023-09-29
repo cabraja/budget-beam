@@ -10,7 +10,7 @@ function loading() {
             <div className="grid grid-cols-7 gap-x-8 gap-y-5">
                 {
                 Array.from({ length: 30 }, (_r, index) => (
-                    <Skeleton className="aspect-square rounded-full" />
+                    <Skeleton key={index} className="aspect-square rounded-full" />
                     ))
                 }
             </div>

@@ -77,12 +77,12 @@ export default async function getGroupedIncome(params:IDashboardParams){
                 if(tag.id === inc.incomeTagId){
                     tagName = tag.label;
                     tagObj = tag;
+
+                    result.labels.push(tagName);
+                    result.datasets[0].data.push(inc._sum.amount || 0);
+                    result.datasets[0].backgroundColor.push(tagObj?.color || "#000")
                 }
             })
-
-            result.labels.push(tagName);
-            result.datasets[0].data.push(inc._sum.amount || 0);
-            result.datasets[0].backgroundColor.push(tagObj?.color || "#000")
         })
         
         return result;

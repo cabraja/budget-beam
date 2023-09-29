@@ -76,13 +76,13 @@ export default async function getGroupedExpenses(params:IDashboardParams){
             tags.forEach(tag => {
                 if(tag.id === exs.expenseTagId){
                     tagName = tag.label;
-                    tagObj = tag;
+                    tagObj = tag as ExpenseTag;
+
+                    result.labels.push(tagName);
+                    result.datasets[0].data.push(exs._sum.amount || 0);
+                    result.datasets[0].backgroundColor.push(tagObj?.color || "#000");
                 }
             })
-
-            result.labels.push(tagName);
-            result.datasets[0].data.push(exs._sum.amount || 0);
-            result.datasets[0].backgroundColor.push(tagObj?.color || "#000")
         })
         
         return result;

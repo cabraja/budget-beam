@@ -27,9 +27,6 @@ function DashboardCard({amount,title,changeColor}:DashboardCardProps) {
       }>
         <DashboardCardAmount amount={amount}/>
       </CardContent>
-      <CardFooter>
-      <CardDescription>+ 2% from last month</CardDescription>
-      </CardFooter>
     </Card>
   )
 }

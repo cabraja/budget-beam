@@ -3,7 +3,7 @@ import { SignIn, ClerkLoading } from "@clerk/nextjs";
  
 export default function Page() {
   return (
-    <div className="flex items-center justify-center mt-10">
+    <div className="flex items-center justify-center mt-10 mb-5">
       <div className="flex flex-col items-center">
         <div className="mb-8 flex flex-col items-center w-[80%]">
           <h2 className="font-extrabold text-center text-2xl lg:text-3xl w-full lg:w-[50%] mb-1">Get your finances in order with BudgetBeam!</h2>

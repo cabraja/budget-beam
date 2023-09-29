@@ -13,7 +13,7 @@ function Navbar() {
 
   return (
     <header className='w-full flex flex-row items-center justify-between md:px-8 px-2 py-3'>
-        <div className='flex flex-row items-center gap-x-10'>
+        <div className='flex flex-row items-center gap-x-4 lg:gap-x-10'>
             <div className='flex flex-row items-center'>
                 <Image src={icon} width={38} alt='BudgetBeam Logo' className='-mt-1 me-1'/>
                 <h1 className='font-bold text-base md:text-2xl'>BudgetBeam</h1>
@@ -21,15 +21,8 @@ function Navbar() {
 
             {
               userId && (
-                <nav className='lg:flex hidden flex-row items-center gap-x-5'>
-                  <Link href="/dashboard/overview" className="text-sm text-muted-foreground font-medium transition-colors hover:text-primary">
-                  Overview
-                  </Link>
-
-                  <Link href="/contact" className="text-sm text-muted-foreground font-medium transition-colors hover:text-primary">
-                  Contact
-                  </Link>
-
+                <nav className='flex flex-row items-center gap-x-3 rounded-lg border-0 lg:border px-0 lg:px-3 py-1'>
+                  <p className='hidden lg:block text-sm text-muted-foreground font-medium transition-colors hover:text-primary'>Your account</p>
                   <UserButton afterSignOutUrl='/'/>
                 </nav>
               )

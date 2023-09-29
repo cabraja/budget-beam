@@ -97,11 +97,11 @@ function DashboardNav() {
         <Separator num={2}/>
         <div className="flex lg:flex-row flex-col items-center justify-between">
           <Tabs defaultValue={pathname} className="lg:w-fit w-full">
-              <TabsList className="w-full justify-between">
-                  <TabsTrigger className="text-[0.6rem] lg:text-sm" value="/dashboard/overview" onClick={() => router.push(generateUrl('/dashboard/overview'))}>Overview</TabsTrigger>
-                  <TabsTrigger className="text-[0.6rem] lg:text-sm" value="/dashboard/expenses" onClick={() => router.push(generateUrl('/dashboard/expenses'))}>Expenses</TabsTrigger>
-                  <TabsTrigger className="text-[0.6rem] lg:text-sm" value="/dashboard/income" onClick={() => router.push(generateUrl('/dashboard/income'))}>Income</TabsTrigger>
-                  <TabsTrigger className="text-[0.6rem] lg:text-sm" value="/dashboard/calendar" onClick={() => router.push(generateUrl('/dashboard/calendar'))}>Calendar</TabsTrigger>
+              <TabsList className="w-full justify-between lg:flex grid grid-cols-2 grid-rows-2 gap-y-2 h-fit">
+                  <TabsTrigger className="text-[0.7rem] lg:text-sm" value="/dashboard/overview" onClick={() => router.push(generateUrl('/dashboard/overview'))}>Overview</TabsTrigger>
+                  <TabsTrigger className="text-[0.7rem] lg:text-sm" value="/dashboard/expenses" onClick={() => router.push(generateUrl('/dashboard/expenses'))}>Expenses</TabsTrigger>
+                  <TabsTrigger className="text-[0.7rem] lg:text-sm" value="/dashboard/income" onClick={() => router.push(generateUrl('/dashboard/income'))}>Income</TabsTrigger>
+                  <TabsTrigger className="text-[0.7rem] lg:text-sm" value="/dashboard/calendar" onClick={() => router.push(generateUrl('/dashboard/calendar'))}>Calendar</TabsTrigger>
               </TabsList>
           </Tabs>
 

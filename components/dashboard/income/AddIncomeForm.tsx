@@ -154,7 +154,7 @@ function AddIncomeForm({tags}:{tags:TagSelect[]}) {
                                 : "opacity-0"
                             )}
                           />
-                          {tag.label}
+                          <div className="rounded-full w-[10px] h-[10px] me-4" style={{backgroundColor: tag.color}}></div> {tag.label}
                         </CommandItem>
                       ))}
                       <CommandItem>

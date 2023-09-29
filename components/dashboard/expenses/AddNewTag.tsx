@@ -79,7 +79,7 @@ function AddNewTag({type}:AddNewTagProps) {
 
   return (
     <Dialog>
-        <DialogTrigger className="underline px-6">Add new tag</DialogTrigger>
+        <DialogTrigger className="px-6"><span className='font-bold text-lg'>+</span> Add new tag</DialogTrigger>
             <DialogContent>
                 <DialogHeader>
                 <DialogTitle>Create an {type} tag</DialogTitle>

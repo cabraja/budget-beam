@@ -22,7 +22,7 @@ function OverviewPieChart({data}:{data:OverviewGraphData}) {
             <div className='w-full px-4 h-[80%] flex items-center justify-center'>
                 <div className='flex flex-col items-center'>
                     <p className='font-bold'>No income this month.</p>
-                    <p className='font-light text-secondary-foreground'>Start adding income in the income tab.</p>
+                    <p className='font-light text-secondary-foreground text-center'>Start adding income in the income tab.</p>
                 </div>
             </div>
            )

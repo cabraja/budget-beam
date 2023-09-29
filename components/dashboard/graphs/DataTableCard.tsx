@@ -14,7 +14,7 @@ function DataTableCard({type,data}:DataTableRowProps) {
     const router = useRouter()
     const [disabled, setDisabled] = useState(false)
 
-    const deleteRow = useCallback(() => {
+    const deleteRow = () => {
         setDisabled(true);
         axios.delete(`/api/${type}/${data.id}`)
         .then(res => {
@@ -25,7 +25,7 @@ function DataTableCard({type,data}:DataTableRowProps) {
             toast.error('Error occured, try again later')
         })
         .finally(() => setDisabled(false))
-    },[data.id])
+    }
 
   return (
     <Card className='px-2 py-2 font-bold flex flex-row items-center justify-between'>

@@ -16,8 +16,12 @@ More features coming in the future!
 
 ### Front-end
 
-Typescript, React.js, TailwindCSS, shadcdn/ui, axios, zustand, eslint
+Typescript, React.js, TailwindCSS, shadcdn/ui, Axios, Zustand, Eslint
 
 ### Back-end
 
 Typescript, Next.js, PrismaORM, Supabase(PostgreSQL)
+
+## Images
+
+![dashboard-light](https://i.imgur.com/RjXZQFh.png)

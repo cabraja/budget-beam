@@ -25,3 +25,9 @@ Typescript, Next.js, PrismaORM, Supabase(PostgreSQL)
 ## Images
 
 ![dashboard-light](https://i.imgur.com/RjXZQFh.png)
+
+![dashboard-dark](https://i.imgur.com/ul432Bi.png)
+
+![calendar](https://i.imgur.com/pBppH73.png)
+
+![expenses-tab](https://i.imgur.com/Jv80csx.png)

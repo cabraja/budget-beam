@@ -1,5 +1,5 @@
 'use client'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Card,CardHeader,CardTitle } from '@/components/ui/card';
 import {
   Chart as ChartJS,
@@ -12,6 +12,9 @@ import {
 } from 'chart.js';
 import { Bar } from 'react-chartjs-2';
 import { OverviewGraphData } from '@/app/types/graphs';
+import { Rates } from '@/app/actions/getRates';
+import { useCurrencyStore } from '@/app/hooks/useCurrency';
+import {formatCurrency} from '@/lib/formatCurrency';
 
 ChartJS.register(
   CategoryScale,
@@ -35,7 +38,22 @@ export const options = {
 };
 
 
-function OverviewGraph({data}:{data:OverviewGraphData}) {
+function OverviewGraph({data,rates}:{data:OverviewGraphData,rates:Rates}) {
+
+  const {currency} = useCurrencyStore();
+
+ const newData = data.datasets[0].data.map(x => formatCurrency(x,currency.name,rates));
+
+ data = {
+   ...data,
+   datasets:[
+    {
+      ...data.datasets[0],
+      data: newData
+    }
+   ]
+ }
+
   return (
     <Card className='w-full h-full'>
         <CardHeader>

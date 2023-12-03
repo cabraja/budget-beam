@@ -2,7 +2,7 @@
 
 import * as React from "react"
 import { Check} from "lucide-react"
-
+import {currencies, useCurrencyStore } from "@/app/hooks/useCurrency"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import {
@@ -16,25 +16,9 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover"
 
-const currencies = [
-  {
-    value: "USD",
-    label: "USD($)",
-  },
-  {
-    value: "EUR",
-    label: "EUR(€)",
-  },
-  {
-    value: "JPY",
-    label: "JPY(¥)",
-  },
-]
-
 export default function CurrencySelect() {
-  const [open, setOpen] = React.useState(false)
-  const [value, setValue] = React.useState("USD")
-
+  const [open, setOpen] = React.useState(false);
+  const {currency,onChange} = useCurrencyStore();
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
@@ -44,29 +28,29 @@ export default function CurrencySelect() {
           aria-expanded={open}
           className="w-[100px] justify-between"
         >
-          {value
-            ? currencies.find(curr => curr.value === value)?.label
+          {currency !== null
+            ? `${currencies[currency.id].name} (${currencies[currency.id].label})`
             : "Currency"}
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-[120px] p-0">
         <Command>
           <CommandGroup>
-            {currencies.map((currency) => (
+            {currencies.map((curr) => (
               <CommandItem
-                key={currency.value}
+                key={curr.name}
                 onSelect={(currentValue) => {
-                    setValue(currency.value)
+                    onChange(curr.id)
                     setOpen(false)
                 }}
               >
                 <Check
                   className={cn(
                     "mr-2 h-4 w-4",
-                    value === currency.value ? "opacity-100" : "opacity-0"
+                    curr.id === currency.id ? "opacity-100" : "opacity-0"
                   )}
                 />
-                {currency.label}
+                <span className="mr-1">{curr.name}</span>({curr.label})
               </CommandItem>
             ))}
           </CommandGroup>

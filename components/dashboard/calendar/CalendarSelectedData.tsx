@@ -1,10 +1,17 @@
 'use client'
+import { Rates } from "@/app/actions/getRates";
+import { useCurrencyStore } from "@/app/hooks/useCurrency";
 import useSelectedDay from "@/app/hooks/useSelectedDay"
 import { Card, CardHeader, CardTitle } from "@/components/ui/card";
+import { formatCurrency } from "@/lib/formatCurrency";
 import { format } from "date-fns";
 
-function CalendarSelectedData() {
+interface CalendarSelectedDataProps{
+    rates:Rates;
+}
 
+function CalendarSelectedData({rates}:CalendarSelectedDataProps) {
+    const {currency} = useCurrencyStore();
     const selectedDay = useSelectedDay();
 
     const entriesNone = selectedDay.expenses.length == 0 && selectedDay.income.length == 0;
@@ -37,7 +44,7 @@ function CalendarSelectedData() {
                             selectedDay.expenses.map(exp => (
                             <li key={exp.id} className="flex flex-row items-center gap-x-4 my-1">
                                 <div className="rounded-full w-[10px] h-[10px]" style={{backgroundColor: exp.tag.color}}></div>
-                                <p>{exp.amount}$ - {exp.tag.label}</p>
+                                <p>{currency.isLeft && currency.label}{formatCurrency(exp.amount,currency.name,rates)}{!currency.isLeft && currency.label} - {exp.tag.label}</p>
                             </li>
                             ))
                         }
@@ -54,7 +61,7 @@ function CalendarSelectedData() {
                             selectedDay.income.map(inc => (
                             <li key={inc.id} className="flex flex-row items-center gap-x-4 my-1">
                                 <div className="rounded-full w-[10px] h-[10px]" style={{backgroundColor: inc.tag.color}}></div>
-                                <p>{inc.amount}$ - {inc.tag.label}</p>
+                                <p>{currency.isLeft && currency.label}{formatCurrency(inc.amount,currency.name,rates)}{!currency.isLeft && currency.label} - {inc.tag.label}</p>
                             </li>
                             ))
                         }

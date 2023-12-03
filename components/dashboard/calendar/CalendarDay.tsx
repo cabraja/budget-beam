@@ -1,4 +1,5 @@
 'use client'
+import { useCurrencyStore } from "@/app/hooks/useCurrency";
 import { DataEntry } from "./CalendarComponent";
 import useSelectedDay from "@/app/hooks/useSelectedDay";
 import {
@@ -6,17 +7,20 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover"
+import { Rates } from "@/app/actions/getRates";
+import { formatCurrency } from "@/lib/formatCurrency";
 
 
 interface CalendarDayProps{
     day:number;
     income:DataEntry[] | null;
     expense:DataEntry[] | null;
+    rates:Rates;
 }
 
-function CalendarDay({day,income,expense}:CalendarDayProps) {
-
-  const selectedDay = useSelectedDay()
+function CalendarDay({day,income,expense,rates}:CalendarDayProps) {
+  const {currency} = useCurrencyStore();
+  const selectedDay = useSelectedDay();
 
    let incomeTotal = 0;
     if(income && income?.length > 0){
@@ -57,8 +61,8 @@ function CalendarDay({day,income,expense}:CalendarDayProps) {
       </PopoverTrigger>
       <PopoverContent>
         <ul>
-          <li>Total Income: {incomeTotal}$</li>
-          <li>Total Expenses: {expenseTotal}$</li>
+          <li>Total Income:{currency.isLeft && currency.label}{formatCurrency(incomeTotal,currency.name,rates)}{!currency.isLeft && currency.label}</li>
+          <li>Total Expenses: {currency.isLeft && currency.label}{formatCurrency(expenseTotal,currency.name,rates)}{!currency.isLeft && currency.label}</li>
         </ul>
       </PopoverContent>
     </Popover>

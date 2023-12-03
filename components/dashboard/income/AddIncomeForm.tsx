@@ -38,6 +38,9 @@ import { TagSelect } from "@/app/types"
 import { useRouter } from "next/navigation"
 import AddNewTag from "../expenses/AddNewTag"
 import {TYPE} from '@/components/dashboard/expenses/AddNewTag'
+import {formatCurrency, formatCurrencyForInput} from "@/lib/formatCurrency"
+import { CurrencyName, useCurrencyStore } from "@/app/hooks/useCurrency"
+import { Rates } from "@/app/actions/getRates"
 
 const formSchema = z.object({
   amount: z.coerce.number().positive({
@@ -55,9 +58,10 @@ const formSchema = z.object({
 })
 
 
-function AddIncomeForm({tags}:{tags:TagSelect[]}) {
+function AddIncomeForm({tags,rates}:{tags:TagSelect[],rates:Rates}) {
   const router = useRouter();
   const [disabled, setDisabled] = useState(false);
+  const {currency} = useCurrencyStore()
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -72,7 +76,7 @@ function AddIncomeForm({tags}:{tags:TagSelect[]}) {
     setDisabled(true);
     const loading = toast.loading('Loading')
 
-    axios.post('/api/income',values)
+    axios.post('/api/income',{...values,amount:formatCurrencyForInput(values.amount,currency.name,rates)})
       .then(res => {
         toast.success('Income added')
       })
@@ -95,7 +99,7 @@ function AddIncomeForm({tags}:{tags:TagSelect[]}) {
             name="amount"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Amount</FormLabel>
+                <FormLabel>Amount ({currency.label})</FormLabel>
                 <FormControl>
                   <Input type="number" placeholder="Enter amount" {...field} />
                 </FormControl>

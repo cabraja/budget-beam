@@ -6,8 +6,27 @@ import { OverviewGraphData } from '@/app/types/graphs';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 import { Card,CardHeader,CardTitle } from '@/components/ui/card';
+import { Rates } from '@/app/actions/getRates';
+import { useCurrencyStore } from '@/app/hooks/useCurrency';
+import {formatCurrency} from '@/lib/formatCurrency';
 
-function OverviewPieChart({data}:{data:OverviewGraphData}) {
+function OverviewPieChart({data,rates}:{data:OverviewGraphData,rates:Rates}) {
+
+    const {currency} = useCurrencyStore();
+
+    const newData = data.datasets[0].data.map(x => formatCurrency(x,currency.name,rates));
+
+    data = {
+    ...data,
+    datasets:[
+        {
+        ...data.datasets[0],
+        data: newData
+        }
+    ]
+    }
+
+
     return (
     <Card className='w-full h-full'>
         <CardHeader>

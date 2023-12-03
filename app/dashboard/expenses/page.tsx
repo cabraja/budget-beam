@@ -11,6 +11,7 @@ import { IDashboardParams } from '@/app/actions/getGroupedExpenses'
 import getExpenses from '@/app/actions/getExpenses'
 import { TableType } from '@/app/types/enums'
 import DataTable from '@/components/dashboard/graphs/DataTable'
+import getRates from '@/app/actions/getRates'
 
 interface OverviewProps{
   searchParams:IDashboardParams;
@@ -20,8 +21,9 @@ async function Expenses({searchParams}:OverviewProps) {
 
   const tagsData = getExpensesTags();
   const expensesData = getExpenses(searchParams);
+  const ratesData = getRates();
 
-  const [tags,expenses] = await Promise.all([tagsData,expensesData]);
+  const [tags,expenses,rates] = await Promise.all([tagsData,expensesData,ratesData]);
 
   return (
     <div className='py-6'>
@@ -31,7 +33,7 @@ async function Expenses({searchParams}:OverviewProps) {
               <CardTitle>Add Expense</CardTitle>
             </CardHeader>
             <CardContent>
-              <AddExpense tags={tags}/>
+              <AddExpense rates={rates} tags={tags}/>
             </CardContent>
         </Card>
 
@@ -39,7 +41,7 @@ async function Expenses({searchParams}:OverviewProps) {
           <CardContent className='h-full lg:p-6 p-0'>
             {
               expenses && expenses.length ?
-              <DataTable data={expenses} type={TableType.EXPENSES}/>
+              <DataTable rates={rates} data={expenses} type={TableType.EXPENSES}/>
               :
               <div className='flex items-center justify-center w-full h-full'>
                 <div className='flex flex-col items-center'>

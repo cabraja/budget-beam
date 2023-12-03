@@ -10,6 +10,7 @@ import { IDashboardParams } from '@/app/actions/getGroupedExpenses'
 import getIncome from '@/app/actions/getIncome'
 import { TableType } from "@/app/types/enums"
 import DataTable from '@/components/dashboard/graphs/DataTable'
+import getRates from "@/app/actions/getRates"
 
 interface OverviewProps{
   searchParams:IDashboardParams;
@@ -19,8 +20,9 @@ async function Income({searchParams}:OverviewProps) {
 
   const tagsData = await getIncomeTags()
   const getIncomeData = await getIncome(searchParams)
+  const ratesData = getRates();
 
-  const [tags,income] = await Promise.all([tagsData,getIncomeData]);
+  const [tags,income,rates] = await Promise.all([tagsData,getIncomeData,ratesData]);
 
   return (
     <div className='py-6'>
@@ -30,7 +32,7 @@ async function Income({searchParams}:OverviewProps) {
               <CardTitle>Add Income</CardTitle>
             </CardHeader>
             <CardContent>
-              <AddIncomeForm tags={tags}/>
+              <AddIncomeForm rates={rates} tags={tags}/>
             </CardContent>
         </Card>
 
@@ -38,7 +40,7 @@ async function Income({searchParams}:OverviewProps) {
           <CardContent className='h-full lg:p-6 p-0'>
             {
               income && income.length ?
-              <DataTable data={income} type={TableType.INCOME}/>
+              <DataTable rates={rates} data={income} type={TableType.INCOME}/>
               :
               <div className='flex items-center justify-center w-full h-full'>
                 <div className='flex flex-col items-center'>

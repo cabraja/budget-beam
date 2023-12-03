@@ -7,6 +7,7 @@ import Separator from '@/components/ui/custom/Separator';
 import OverviewPieChart from '@/components/dashboard/graphs/OverviewPieChart';
 import getGroupedIncome from '@/app/actions/getGroupedIncome';
 import getTotalData from '@/app/actions/getTotalData';
+import getRates from '@/app/actions/getRates';
 
 interface OverviewProps{
   searchParams:IDashboardParams;
@@ -16,17 +17,18 @@ async function Overview({searchParams}:OverviewProps) {
   const totalData = getTotalData(searchParams);
   const groupedExpensesData = getGroupedExpenses(searchParams);
   const groupedIncomeData = getGroupedIncome(searchParams);
+  const ratesData = getRates()
 
-  const [total,groupedExpenses,groupedIncome] = await Promise.all([totalData,groupedExpensesData,groupedIncomeData]);
+  const [total,groupedExpenses,groupedIncome,rates] = await Promise.all([totalData,groupedExpensesData,groupedIncomeData,ratesData]);
 
   return (
     <div className='py-6'>
       <div className='grid grid-cols-1 md:grid-cols-3 gap-x-8 gap-y-4'>
-        <DashboardCard title='Total Income' amount={total?.income || 0}/>
+        <DashboardCard rates={rates} title='Total Income' amount={total?.income || 0}/>
 
-        <DashboardCard title='Total Expenses' amount={total?.expense || 0}/>
+        <DashboardCard rates={rates} title='Total Expenses' amount={total?.expense || 0}/>
 
-        <DashboardCard title='Net Difference' changeColor={true} amount={(total?.income || 0) - (total?.expense || 0)}/>
+        <DashboardCard rates={rates} title='Net Difference' changeColor={true} amount={(total?.income || 0) - (total?.expense || 0)}/>
       </div>
       <Separator num={4}/>
 
@@ -35,7 +37,7 @@ async function Overview({searchParams}:OverviewProps) {
           <div className='flex-grow h-full'>
             {
               groupedExpenses ?
-              <OverviewGraph data={groupedExpenses}/>
+              <OverviewGraph rates={rates} data={groupedExpenses}/>
               :
               (
               <div className='w-full px-4 h-[80%] flex items-center justify-center'>
@@ -53,7 +55,7 @@ async function Overview({searchParams}:OverviewProps) {
          <div className='flex-grow h-full'>
           {
             groupedIncome ?
-            <OverviewPieChart data={groupedIncome}/>
+            <OverviewPieChart rates={rates} data={groupedIncome}/>
             :
             (
               <div className='w-full px-4 h-[80%] flex items-center justify-center'>

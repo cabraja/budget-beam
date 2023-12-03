@@ -1,20 +1,20 @@
 import {
     Card,
     CardContent,
-    CardDescription,
-    CardFooter,
     CardHeader,
     CardTitle,
   } from "@/components/ui/card"
 import DashboardCardAmount from './DashboardCardAmount';
+import { Rates } from "@/app/actions/getRates";
 
 interface DashboardCardProps{
   amount:number;
   title:string;
   changeColor?:boolean;
+  rates:Rates;
 }
 
-function DashboardCard({amount,title,changeColor}:DashboardCardProps) {  
+function DashboardCard({amount,title,changeColor,rates}:DashboardCardProps) {  
   return (
     <Card>
       <CardHeader>
@@ -25,7 +25,7 @@ function DashboardCard({amount,title,changeColor}:DashboardCardProps) {
         amount < 0 ? 'text-destructive': 'text-positive'
         :''
       }>
-        <DashboardCardAmount amount={amount}/>
+        <DashboardCardAmount rates={rates} amount={amount}/>
       </CardContent>
     </Card>
   )

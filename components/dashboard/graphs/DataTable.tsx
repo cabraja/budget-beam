@@ -9,10 +9,12 @@ import {
 import DataTableRow from './DataTableRow';
 import { ScrollArea } from "@/components/ui/scroll-area"
 import DataTableCard from './DataTableCard';
+import { Rates } from '@/app/actions/getRates';
 
 
 interface DataTableProps{
-    type:string,
+    type:string;
+    rates:Rates;
     data: ({
         tag: {
             id: number;
@@ -32,7 +34,7 @@ interface DataTableProps{
     })[]
 }
 
-function DataTable({type,data}:DataTableProps) {
+function DataTable({type,rates,data}:DataTableProps) {
   return (
    <>
     <ScrollArea className='lg:h-[50vh] h-full w-full lg:block hidden'>
@@ -48,7 +50,7 @@ function DataTable({type,data}:DataTableProps) {
         <TableBody>
             {
                 data.map(row => (
-                <DataTableRow key={row.id} data={row} type={type}/>
+                <DataTableRow rates={rates} key={row.id} data={row} type={type}/>
                 ))
             }
         </TableBody>
@@ -58,7 +60,7 @@ function DataTable({type,data}:DataTableProps) {
    <div className='flex lg:hidden flex-col items-stretch gap-y-3'>
         {
             data.map(row => (
-            <DataTableCard key={row.id} data={row} type={type}/>
+            <DataTableCard rates={rates} key={row.id} data={row} type={type}/>
             ))
         }
    </div>

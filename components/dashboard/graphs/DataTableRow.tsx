@@ -11,10 +11,14 @@ import {
 } from "@/components/ui/table"
 import { Button } from "@/components/ui/button"
 import { useRouter } from 'next/navigation'
+import { Rates } from '@/app/actions/getRates'
+import { useCurrencyStore } from '@/app/hooks/useCurrency'
+import { formatCurrency } from '@/lib/formatCurrency'
 
 
 export interface DataTableRowProps{
-    type:string,
+    type:string;
+    rates:Rates;
     data: {
         tag: {
             id: number;
@@ -35,9 +39,10 @@ export interface DataTableRowProps{
 }
 
 
-function DataTableRow({type,data}:DataTableRowProps) {
+function DataTableRow({type,rates,data}:DataTableRowProps) {
     const router = useRouter()
     const [disabled, setDisabled] = useState(false)
+    const {currency} = useCurrencyStore();
 
     const deleteRow = useCallback(() => {
         setDisabled(true);
@@ -56,7 +61,7 @@ function DataTableRow({type,data}:DataTableRowProps) {
     <TableRow>
         <TableCell className="font-medium">{data.tag.label}</TableCell>
         <TableCell>{format(data.date, "PP")}</TableCell>
-        <TableCell className="text-right">${data.amount}</TableCell>
+        <TableCell className="text-right">{currency.isLeft && currency.label}{formatCurrency(data.amount, currency.name, rates)}{!currency.isLeft && currency.label}</TableCell>
         <TableCell className='w-0'>
             <Button disabled={disabled} onClick={() => deleteRow()} className='bg-destructive hover:bg-destructive hover:opacity-70 transition'>
                 <BsFillTrashFill size={16}/>

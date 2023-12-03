@@ -1,6 +1,7 @@
 import convertUTCDateToLocalDate from "@/lib/localDate";
 import CalendarDay from "./CalendarDay";
 import { getDate,getDay,getDaysInMonth,startOfMonth } from "date-fns";
+import { Rates } from "@/app/actions/getRates";
 
 export interface DataEntry{
   tag: {
@@ -23,13 +24,14 @@ interface CalendarProps{
   startDate: Date | null;
   income:DataEntry[];
   expenses:DataEntry[];
+  rates:Rates;
 }
 
 interface GroupedDataItem{
   data:DataEntry[];
 }
 
-function CalendarComponent({startDate,income,expenses}:CalendarProps) {
+function CalendarComponent({startDate,income,expenses,rates}:CalendarProps) {
 
   let groupedIncomes:GroupedDataItem[] = [];
   let groupedExpenses:GroupedDataItem[] = [];
@@ -98,6 +100,7 @@ function CalendarComponent({startDate,income,expenses}:CalendarProps) {
       {
         Array.from({ length: daysInMonth }, (_r, index) => (
           <CalendarDay
+            rates={rates}
             key={index}
             income={groupedIncomes[index]?.data ? groupedIncomes[index].data : null}
             expense={groupedExpenses[index]?.data ? groupedExpenses[index].data : null}

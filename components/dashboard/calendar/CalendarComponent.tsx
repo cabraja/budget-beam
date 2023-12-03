@@ -1,6 +1,6 @@
-import { CardHeader, CardTitle } from "@/components/ui/card";
+import convertUTCDateToLocalDate from "@/lib/localDate";
 import CalendarDay from "./CalendarDay";
-import { getDate,getDay,getDaysInMonth } from "date-fns";
+import { getDate,getDay,getDaysInMonth,startOfMonth } from "date-fns";
 
 export interface DataEntry{
   tag: {
@@ -58,10 +58,11 @@ function CalendarComponent({startDate,income,expenses}:CalendarProps) {
     daysInMonth = getDaysInMonth(startDate);
     dayOfWeek = getDay(startDate);
   }else{
-    daysInMonth = getDaysInMonth(new Date());
-    dayOfWeek = getDay(new Date());
+    const dateNow = convertUTCDateToLocalDate(new Date())
+    daysInMonth = getDaysInMonth(dateNow);
+    dayOfWeek = getDay(startOfMonth(dateNow));
   }
-
+  
   dayOfWeek = (dayOfWeek || 7) - 1;
 
   return (

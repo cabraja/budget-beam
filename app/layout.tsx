@@ -24,9 +24,12 @@ export default function RootLayout({
 }) {
   return (
     <ClerkProvider>
-      <html lang="en">
+      <html lang="en" suppressHydrationWarning>
       <body className={inter.className}>
-          <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+          <ThemeProvider attribute='class'
+          defaultTheme='dark'
+          enableSystem={false}
+          storageKey='budget-beam' >
             <ToastProvider />
             <Navbar />
             <div className='md:px-10 px-3 max-w-[1600px] mx-auto'>

@@ -8,7 +8,7 @@ BudgetBeam is all in one tool to help you with keeping your income and expenses 
 - Grouping data into coloured tags and adding your own tags.
 - Displaying data in charts and graphs for your convenience.
 - Using a calendar to view income and expenses for each day in a given month.
-- Giving an option of multiple currencies to work with (will be added in the future).
+- Giving an option of multiple currencies to work with (now live!).
 
 More features coming in the future!
 

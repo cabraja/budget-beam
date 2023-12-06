@@ -1,0 +1,5 @@
+- Fix number rounding (for example, input is 100 rsd but the output is 99.87 rsd)
+- Auto close tag dropdown on select
+- Auto close tag creation modal on submit
+- Amount default input should be empty, not 0
+- Fix expense and income tables on mobile
